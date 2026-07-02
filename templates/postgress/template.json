@@ -1398,13 +1398,22 @@
               "type": "string",
               "field": "host_name"
             },
-            "dataset": "metrics"
+            "dataset": "metrics",
+            "filters": [
+              {
+                "type": "string",
+                "field": "postgresql_database_name",
+                "value": "",
+                "operator": "EXISTS"
+              }
+            ]
           },
           "source": "cloudwatch",
           "queryType": "otel.values"
         },
         "is_multi": false,
         "description": "",
+        "usesVariables": [],
         "show_all_option": false
       },
       {

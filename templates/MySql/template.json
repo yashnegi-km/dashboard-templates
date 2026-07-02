@@ -62,7 +62,8 @@
               "temporality": "cumulative"
             },
             "datasourceId": "kloudmate",
-            "responseType": "series"
+            "responseType": "series",
+            "promql_query_type": "instant"
           }
         ],
         "time_options": {
@@ -126,7 +127,8 @@
               "temporality": "cumulative"
             },
             "datasourceId": "kloudmate",
-            "responseType": "series"
+            "responseType": "series",
+            "promql_query_type": "instant"
           }
         ],
         "time_options": {
@@ -935,10 +937,10 @@
             },
             "datasourceId": "kloudmate",
             "responseType": "series",
-            "promql_query_type": "range"
+            "promql_query_type": "instant"
           },
           {
-            "exp": "mysql_table_open_cache{host_name=\"$DBHOST\"}\r\n",
+            "exp": "mysql_table_open_cache{host_name=\"$DBHOST\"}\n",
             "page": 1,
             "stat": "",
             "type": "query",
@@ -971,7 +973,8 @@
               "temporal": "AVG"
             },
             "datasourceId": "kloudmate",
-            "responseType": "series"
+            "responseType": "series",
+            "promql_query_type": "instant"
           },
           {
             "type": "expression",
@@ -1341,7 +1344,7 @@
         }
       }
     ],
-    "timeRange": "1h",
+    "timeRange": "15m",
     "variables": [
       {
         "name": "DBHOST",
@@ -1349,17 +1352,23 @@
         "label": "DB_HOST",
         "config": {
           "otel": {
-            "key": {
-              "type": "string",
-              "field": "host_name"
-            },
-            "dataset": "metrics"
+            "key": "host_name",
+            "dataset": "metrics",
+            "filters": [
+              {
+                "type": "string",
+                "field": "mysql_instance_endpoint",
+                "value": "",
+                "operator": "EXISTS"
+              }
+            ]
           },
           "source": "cloudwatch",
           "queryType": "otel.values"
         },
         "is_multi": false,
         "description": "",
+        "usesVariables": [],
         "show_all_option": false
       },
       {
